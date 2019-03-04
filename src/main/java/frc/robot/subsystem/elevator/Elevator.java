@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Subsystem implements Loggable, Refreshable {
     //motor ports
@@ -72,7 +73,7 @@ public class Elevator extends Subsystem implements Loggable, Refreshable {
     @Override
     public void log() {
        // SmartDashboard.putNumber("Elevator motor", ???? );
-        System.out.println(elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("Lift Distance", getDistance());
     }
 
     @Override
