@@ -24,6 +24,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -54,6 +55,7 @@ public class Robot extends IterativeRobot //TimedRobot
     private RioDuino rioDuino;
     private CameraController cameraController;
     private XboxController subsystemController = new XboxController(1);
+    private PowerDistributionPanel pdp;
     private static Robot exposedInstance;
 
     /**
@@ -79,6 +81,9 @@ public class Robot extends IterativeRobot //TimedRobot
     public void robotInit() {
         //set reference for exposed instance
         exposedInstance = this;
+
+        //power distribution
+        pdp = new PowerDistributionPanel();
 
         //initialize subsystems
         pneumatics = new Pneumatics();
@@ -216,6 +221,10 @@ public class Robot extends IterativeRobot //TimedRobot
 
     public Elevator getElevator() {
         return elevator;
+    }
+
+    public PowerDistributionPanel getPowerData() {
+        return pdp;
     }
 
     private void initController() {
