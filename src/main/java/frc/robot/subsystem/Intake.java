@@ -23,11 +23,15 @@ public class Intake extends Subsystem implements Loggable, Refreshable {
 
     @Override
     public void refresh() {
-        firstMotor.setSpeed(Robot.getInstance().getSubsystemController().Triggers.Left);
-        secondMotor.setSpeed(Robot.getInstance().getSubsystemController().Triggers.Left);
-
-        firstMotor.setSpeed(-Robot.getInstance().getSubsystemController().Triggers.Right);
-        secondMotor.setSpeed(-Robot.getInstance().getSubsystemController().Triggers.Right);
+        if(Math.abs(Robot.getInstance().getSubsystemController().Triggers.Left) > 0) {
+            firstMotor.setSpeed(Robot.getInstance().getSubsystemController().Triggers.Left);
+            secondMotor.setSpeed(Robot.getInstance().getSubsystemController().Triggers.Left);
+        }
+        
+        else {
+            firstMotor.setSpeed(-Robot.getInstance().getSubsystemController().Triggers.Right);
+            secondMotor.setSpeed(-Robot.getInstance().getSubsystemController().Triggers.Right);
+        }
     }
 
     @Override
