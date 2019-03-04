@@ -13,6 +13,7 @@ public class Tilt extends Subsystem implements Loggable, Refreshable {
     private static int ENCODER_CHANNEL_B;
 
     private static int MOTOR_PORT = 5;
+    private static final double SPEED = 0.4;
 
     private boolean isReverse = false;
 
@@ -28,7 +29,8 @@ public class Tilt extends Subsystem implements Loggable, Refreshable {
     @Override
     public void refresh() {
         //TODO do real-time calculation && movements here
-        tiltMotor.setSpeed(Robot.getInstance().getSubsystemController().RightStick.Y);
+        double stickPos = Robot.getInstance().getSubsystemController().RightStick.Y;
+        tiltMotor.setSpeed(stickPos > 0 ? SPEED : stickPos < 0 ? -SPEED : 0);
     }
 
     @Override
