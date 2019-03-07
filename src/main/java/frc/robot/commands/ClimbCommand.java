@@ -18,6 +18,7 @@ public class ClimbCommand extends Command {
 
     @Override
     public void initialize() {
+        
         if(Robot.getInstance().getPneumatics().getOpenState()) {
             Robot.getInstance().getPneumatics().solenoidReverse(SOLENOID_PORT);
             Robot.getInstance().getPneumatics().setOpenState(false);
@@ -26,6 +27,7 @@ public class ClimbCommand extends Command {
             Robot.getInstance().getPneumatics().solenoidForward(SOLENOID_PORT);
             Robot.getInstance().getPneumatics().setOpenState(true);
         }
+        
     }
 
     @Override

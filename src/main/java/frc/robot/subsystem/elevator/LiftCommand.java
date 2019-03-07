@@ -6,17 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftCommand extends Command {
 
-    private boolean up;
-
-    private static int TOP = 100;
-    private static int MIDDLE = 50;
-    private static int BOTTOM = 25;
-
-    private static double LIFT_SPEED = 0.7;
-
-    private static int targetDistance;
-
-    private static boolean finished = false;
+   private boolean up;
+   private boolean finished;
+   private double targetDistance;
+   private double speed = 0.4;
 
 
     public LiftCommand(boolean up) {
@@ -26,59 +19,59 @@ public class LiftCommand extends Command {
 
     @Override
     public void initialize() {
-        double currDistance = Math.abs(Robot.getInstance().getElevator().getDistance());
-        if(up) {
-            if(currDistance >= TOP) {
-                finished = true;
+        Robot.getInstance().getElevator().getDistanceEncoder().reset();
+        ElevatorStage currentStage = Robot.getInstance().getElevator().getStage();
+        if(currentStage == ElevatorStage.BOTTOM) {
+            if(up) {
+                targetDistance = 10000;
+                Robot.getInstance().getElevator().setStage(ElevatorStage.MIDDLE);
             }
             else {
-                if(currDistance < MIDDLE) {
-                    targetDistance = MIDDLE;
-                }
-                else if(currDistance < TOP) {
-                    targetDistance = TOP;
-                }
+                System.out.println("You Can't Go Lower");
+                targetDistance = 0;
+            }
+        }
+        else if(currentStage == ElevatorStage.MIDDLE) {
+            if(up) {
+                targetDistance = 15000;
+                Robot.getInstance().getElevator().setStage(ElevatorStage.TOP);
+            }
+            else {
+                targetDistance = 10000;
+                Robot.getInstance().getElevator().setStage(ElevatorStage.BOTTOM);
             }
         }
         else {
-            if(currDistance <= BOTTOM) {
-                finished = true;
+            if(up) {
+                System.out.println("You Can't Go Higher");
+                targetDistance = 0;
             }
             else {
-                if(currDistance > MIDDLE) {
-                    targetDistance = MIDDLE;
-                }
-                else if(currDistance > BOTTOM) {
-                    targetDistance = BOTTOM;
-                }
+                targetDistance = 15000;
+                Robot.getInstance().getElevator().setStage(ElevatorStage.MIDDLE);
             }
         }
     }
 
     @Override
     protected void execute() {
-        double currDistance = Math.abs(Robot.getInstance().getElevator().getDistance());
-        if(up) {
-            if(currDistance < targetDistance) {
-                Robot.getInstance().getElevator().getElevatorMotor().set(LIFT_SPEED);
-            }
-            else {
-                finished = true;
-            }
+        double currentDistance = Math.abs(Robot.getInstance().getElevator().getDistance());
+        if(currentDistance >= targetDistance) {
+            finished = true;
         }
         else {
-            if(currDistance > targetDistance) {
-                Robot.getInstance().getElevator().getElevatorMotor().set(-LIFT_SPEED);
-            }
-            else {
-                finished = true;
-            }
+            Robot.getInstance().getElevator().getElevatorMotor().setSpeed(speed);
         }
-
     }
 
     @Override
     protected boolean isFinished() {
-        return finished;
+        if(finished) {
+            targetDistance = 0;
+            Robot.getInstance().getElevator().getElevatorMotor().setSpeed(0);
+            finished = false;
+            return true;
+        }
+        return false;
     }
 }

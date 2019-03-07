@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Subsystem implements Loggable, Refreshable {
+
+    private ElevatorStage currentStage = ElevatorStage.BOTTOM;
+
     //motor ports
     private static int ELEVATOR_PORT = 2;
 
@@ -103,4 +106,19 @@ public class Elevator extends Subsystem implements Loggable, Refreshable {
 
         elevatorEncoder.setDistancePerPulse(encoderLinearDistancePerPulse);
     }
+
+    public ElevatorStage getStage() {
+        return currentStage;
+    }
+
+    public void setStage(ElevatorStage currentStage) {
+        this.currentStage = currentStage;
+    }
+}
+
+
+enum ElevatorStage {
+    BOTTOM,
+    MIDDLE,
+    TOP
 }

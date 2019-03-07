@@ -241,8 +241,8 @@ public class Robot extends IterativeRobot //TimedRobot
         //subsystemController.Buttons.B.runCommand(new TiltCommand(), XboxController.CommandState.WhenPressed);
         
         //elevator 
-        subsystemController.Buttons.LB.runCommand(new LiftManualCommand(true), XboxController.CommandState.WhilePressed);
-        subsystemController.Buttons.RB.runCommand(new LiftManualCommand(false), XboxController.CommandState.WhilePressed);
+        subsystemController.Buttons.LB.runCommand(new LiftCommand(true), XboxController.CommandState.WhenPressed);
+        subsystemController.Buttons.RB.runCommand(new LiftCommand(false), XboxController.CommandState.WhenPressed);
     }
 
 }

@@ -26,6 +26,7 @@ public class OpenCloseCommand extends Command {
 
     @Override
     public void initialize() {
+        
         if(Robot.getInstance().getPneumatics().getIntakeOpenState()) {
             Robot.getInstance().getPneumatics().solenoidReverse(SOLENOID_PORT);
             Robot.getInstance().getPneumatics().setIntakeOpenState(false);
@@ -34,6 +35,7 @@ public class OpenCloseCommand extends Command {
             Robot.getInstance().getPneumatics().solenoidForward(SOLENOID_PORT);
             Robot.getInstance().getPneumatics().setIntakeOpenState(true);
         }
+        
     }
 
     @Override
