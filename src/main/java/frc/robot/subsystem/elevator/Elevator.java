@@ -70,7 +70,10 @@ public class Elevator extends Subsystem implements Loggable, Refreshable {
     @Override
     public void refresh() {
         //run elevator code here
-        //elevatorMotor.set(controller.LeftStick.Y);
+        //incase encoders stop working
+        if(Math.abs(controller.LeftStick.Y) >= 0.1) {
+            elevatorMotor.set(controller.LeftStick.Y);
+        }
     }
 
     @Override
